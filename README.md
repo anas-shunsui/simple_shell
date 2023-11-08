@@ -1,1 +1,1 @@
-This is simple shell priject
+SimpleShellProject
