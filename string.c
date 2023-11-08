@@ -4,7 +4,7 @@
  * _strdup - duplicate string
  * @s: string
  *
- * Retujrn: character
+ * Return: character
 */
 
 char *_strdup(const char *s)
