@@ -14,72 +14,75 @@ int main(void)
 
 	if (!isatty(0))
 	{
-		while (getline(&l, &sizeOf_line, stdin) != -1)
+		for (; getline(&l, &sizeOf_line, stdin) != -1;)
 		{
-			non_interactive_mode(l, &status);
+			non_intermode(l, &status);
 		}
 		if (l)
 		{
 			free(l);
 			l = NULL;
 		}
-		return (status);
+		return status;
 	}
 	debut_shell();
-	return (0);
+	return 0;
 }
 
 /**
- * non_interactive_mode - Executes shell commands in non_nteractive_mode
- * @token: The string containing commands separated by newline characters
- * @status: integer store the number
- * Return: Returns status.
+ * non_intermode - Executes shell commands in non_nteractive_mode
+ * @token: string
+ * @status: integer
+ * 
+ * Return: status
  */
-void non_interactive_mode(char *token, int *status)
+
+void non_intermode(char *token, int *status)
 {
-	char **single_command;
-	char *envp[] = {NULL};
+	char **sngl_cmd;
+	char *environ[] = {NULL};
 
 	token[strlen(token) - 1] = '\0';
-	single_command = tokenize_string(token, " \t");
-	if (single_command[0])
+	sngl_cmd = splinter_string(token, " \t");
+	if (sngl_cmd[0])
 	{
-		if (!_strcmp(single_command[0], "exit"))
+		if (!_strcmp(sngl_cmd[0], "exit"))
 		{
-			if (single_command[1])
+			if (sngl_cmd[1])
 			{
-				int my_status = _atoi(single_command[1]);
+				int my_status = _atoi(sngl_cmd[1]);
 
-				handle_exit_status(my_status, single_command, &token, status);
+				handle_exit_status(my_status, sngl_cmd, &token, status);
 			}
 			else
 			{
 				free(token);
-				free_array(single_command);
+				free_array(sngl_cmd);
 				exit(*status);
 			}
 		}
-		else if (!_strcmp(single_command[0], "env"))
+		else if (!_strcmp(sngl_cmd[0], "env"))
 		{
 			print_env_var();
 			*status = 0;
 		}
 		else
-		_execvep(single_command, envp, status);
+			_execvep(sngl_cmd, environ, status);
 	}
-	free_array(single_command);
+	free_array(sngl_cmd);
 }
 
 /**
- * tokenize_string - Splits a string into tokens
- * @str: The string to tokenize
- * @delimiters: The delimiters to use for tokenization
+ * splinter_string - Splits a string into tokens
+ * @s: string
+ * @delim: delimiters
  *
- * Return: Returns result.
+ * Return: result.
  */
-char **tokenize_string(char *str, char *delimiters)
+
+char **splinter_string(char *s, char *delim)
 {
-	int count = 0;
+	int i = 0;
 	char *token;
 	char **result = malloc(20 * sizeof(char *));
 
@@ -88,17 +91,15 @@ char **tokenize_string(char *str, char *delimiters)
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
-	token = strtok(str, delimiters);
-	while (token != NULL)
+
+	for (token = strtok(s, delim); token != NULL; i++, token = strtok(NULL, delim))
 	{
-		result[count] = _strdup(token);
-		count++;
-		token = strtok(NULL, delimiters);
+		result[i] = _strdup(token);
 	}
-	while (count < 20)
+
+	for (; i < 20; i++)
 	{
-		result[count] = NULL;
-		count++;
+		result[i] = NULL;
 	}
 
 	return (result);
