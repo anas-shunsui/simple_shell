@@ -12,7 +12,6 @@ void _exec(char **cmds, char **environ, int *status)
 	char *path = NULL;
 	int pid;
 
-
 	if (access(cmds[0], X_OK) == 0)
 	{
 		pid = fork();
@@ -37,7 +36,7 @@ void _exec(char **cmds, char **environ, int *status)
 	{
 		*status = 127;
 		write_error(cmds[0]);
-	};
+	}
 }
 
 /**
@@ -53,17 +52,13 @@ int _search(char *cmd, char **path)
 	char *token, *env;
 	int path_found = 0;
 
-
-
 	env = mygetenv("PATH");
 
 	if (env != NULL)
 	{
 		char *path_env_copy = strdup(env);
 
-		token = strtok(path_env_copy, ":");
-
-		while (token != NULL && !path_found)
+		for (token = strtok(path_env_copy, ":"); token != NULL && !path_found; token = strtok(NULL, ":"))
 		{
 			*path = malloc(strlen(token) + strlen(cmd) + 2);
 			if (*path != NULL)
@@ -73,21 +68,18 @@ int _search(char *cmd, char **path)
 				strcat(*path, cmd);
 				if (access(*path, X_OK) == 0)
 				{
-
 					path_found = 1;
 				}
 
 				if (!path_found)
 					free(*path);
 			}
-
-			token = strtok(NULL, ":");
 		}
 
 		free(path_env_copy);
 	}
 
-	return (path_found);
+	return path_found;
 }
 
 /**
@@ -101,7 +93,7 @@ void child_process(int *status)
 {
 	int stat;
 
-	if (wait(&stat) == -1)
+	for (; wait(&stat) == -1;)
 	{
 		perror("wait");
 		exit(EXIT_FAILURE);
@@ -112,6 +104,7 @@ void child_process(int *status)
 		*status = WEXITSTATUS(stat);
 	}
 }
+
 /**
  * _getenv - Searches for an environment variable
  * @path: path
@@ -122,7 +115,7 @@ void child_process(int *status)
 char *_getenv(const char *path)
 {
 	int a;
-	int lengthOf_path = _strlen((char *) path);
+	int lengthOf_path = _strlen((char *)path);
 
 	for (a = 0; environ[a] != NULL; a++)
 	{
@@ -148,10 +141,9 @@ void _environ_var(void)
 {
 	char **env = environ;
 
-	while (*env != NULL)
+	for (; *env != NULL; env++)
 	{
 		write(STDOUT_FILENO, *env, strlen(*env));
 		write(STDOUT_FILENO, "\n", 1);
-		env++;
 	}
 }
