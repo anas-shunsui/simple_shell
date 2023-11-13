@@ -14,6 +14,13 @@ int _exec(char **cmd, char **argv)
 	int stat;
 
 	ch = fork();
+	if (ch == -1)
+	{
+		perror("fork");
+		free_array(cmd);
+		exit(EXIT_FAILURE);
+	}
+
 	if (ch == 0)
 	{
 		if (execve(cmd[0], cmd, environ) == -1)

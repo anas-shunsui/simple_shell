@@ -1,52 +1,44 @@
 #include "simple_shell.h"
 
 /**
- * splinter - tokenizer
- * @l: line
+ * splinter - Tokenizes the input line
+ * @line: The input line
  *
- * Return: command
-*/
-
-char **splinter(char *l)
+ * Return: Array of tokens
+ */
+char **splinter(char *line)
 {
-	char *tok = NULL, *t = NULL;
+	char *tok = NULL;
 	char **cmd = NULL;
-	int i = 0, a = 0;
+	int num_tokens = 0, a = 0;
 
-	if (!l)
-		return (NULL);
-	t = _strdup(l);
+	if (!line)
+		return NULL;
 
-	tok = strtok(t, DELIM);
-	if (tok == NULL)
+	tok = strtok(line, DELIM);
+	while (tok)
 	{
-		free(l), l = NULL;
-		free(t), t = NULL;
-		return (NULL);
-	}
-
-	while (t)
-	{
-		i++;
+		num_tokens++;
 		tok = strtok(NULL, DELIM);
 	}
-	free(t), t = NULL;
 
-	cmd = malloc(sizeof(char *) * (i + 1));
+	cmd = malloc(sizeof(char *) * (num_tokens + 1));
 	if (!cmd)
-	{
-		free(l), l = NULL;
-		return (NULL);
-	}
+		return NULL;
 
-	tok = strtok(l, DELIM);
+	tok = strtok(line, DELIM);
 	while (tok)
 	{
 		cmd[a] = _strdup(tok);
+		if (cmd[a] == NULL)
+		{
+			free_array(cmd);
+			return NULL;
+		}
 		tok = strtok(NULL, DELIM);
 		a++;
 	}
-	free(l), l = NULL;
 	cmd[a] = NULL;
-	return (cmd);
+
+	return cmd;
 }

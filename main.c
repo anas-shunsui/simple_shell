@@ -5,9 +5,8 @@
  * @ac: arg count
  * @argv: arg vector
  *
- * Return: 0 on success
+ * Return: Exit status
  */
-
 int main(int ac, char **argv)
 {
 	char *l = NULL, **cmd = NULL;

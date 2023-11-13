@@ -21,5 +21,8 @@ char *read_line(void)
 		free(l);
 		return (NULL);
 	}
+	if (l[num - 1] == '\n')
+		l[num - 1] = '\0';
+
 	return (l);
 }

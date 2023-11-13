@@ -18,6 +18,7 @@ extern char **environ;
 char *read_line(void);
 char **splinter(char *l);
 int _exec(char **cmd, char **argv);
+void print_prompt(void);
 
 char *_strdup(const char *s);
 int _strcmp(char *str1, char str2);
@@ -26,5 +27,6 @@ char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
 
 void free_array(char **array);
+void free_a(char **array, int len);
 
 #endif

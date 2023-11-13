@@ -1,40 +1,95 @@
 #include "simple_shell.h"
 
 /**
- * _strdup - duplicate string
- * @s: string
+ * _strdup - Duplicates a string
+ * @src: The source string to duplicate
  *
- * Return: character
-*/
-
-char *_strdup(const char *s)
+ * Return: Returns a pointer(str)
+ */
+char *_strdup(const char *src)
 {
+	char *str;
 	char *p;
-	int a, length = 0;
+	int len = 0;
 
-	if (s == NULL)
+	for (len = 0; src[len]; len++)
+		;
+
+	str = malloc(len + 1);
+	if (!str)
 		return (NULL);
 
-	while (*s != '\0')
-	{
-		length++;
-		s++;
-	}
-	s = s - length;
-	p = malloc(sizeof(char) * (length + 1));
-	if (p == NULL)
-		return (NULL);
-	for (a = 0; a <= length; a++)
-		p[a] = s[a];
-	return (p);
+	p = str;
+	for (; *src;)
+		*p++ = *src++;
+	*p = '\0';
+	return (str);
 }
 
-/*
-*int _string_compare(char *str1, char str2)
-*{
-*
-*}
-*int _string_length(char *str);
-*char *_string_cat(char *dest, char *src);
-*char *_string_copy(char *dest, char *src);
-*/
+/**
+ * _strlen - length of a string
+ * @str: string
+ *
+ * Return: length of the string.
+ */
+
+int _strlen(char *str)
+{
+	int len = 0;
+
+	for (; str[len] != '\0'; len++)
+		;
+
+	return (len);
+}
+
+/**
+ * _strcmp - Compares two strings.
+ * @str1: The first string to compare.
+ * @str2: The second string to compare.
+ *
+ * Return: The difference between the ASCII values of the first unmatched
+ * characters, 0 if the strings are identical.
+ */
+int _strcmp(char *str1, char *str2)
+{
+	int a = 0;
+
+	for (; str1[a] != '\0' && str2[a] != '\0'; a++)
+	{
+		if (str1[a] != str2[a])
+		{
+			return (str1[a] - str2[a]);
+		}
+	}
+
+	return (str1[a] - str2[a]);
+}
+
+/**
+ * _atoi - convert a string into an integer.
+ * @str: string
+ *
+ * Return: int
+ */
+int _atoi(char *str)
+{
+	int sign = 1, i = 0;
+	unsigned int res = 0;
+
+	for (; !(str[i] <= '9' && str[i] >= '0') && str[i] != '\0';)
+	{
+		if (str[i] == '-')
+			sign *= -1;
+		i++;
+	}
+
+	for (; str[i] <= '9' && (str[i] >= '0' && str[i] != '\0');)
+	{
+		res = (res * 10) + (str[i] - '0');
+		i++;
+	}
+
+	res *= sign;
+	return (res);
+}
