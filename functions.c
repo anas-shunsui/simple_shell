@@ -50,36 +50,36 @@ void _exec(char **cmds, char **environ, int *status)
 int _search(char *cmd, char **path)
 {
 	char *token, *env;
-	int path_found = 0;
+	int foundp = 0;
 
 	env = mygetenv("PATH");
 
 	if (env != NULL)
 	{
-		char *path_env_copy = strdup(env);
+		char *_copy = strdup(env);
 
-		for (token = strtok(path_env_copy, ":"); token != NULL && !path_found; token = strtok(NULL, ":"))
+	for (token = strtok(_copy, ":"); token && !foundp; token = strtok(NULL, ":"))
+	{
+		*path = malloc(strlen(token) + strlen(cmd) + 2);
+		if (*path)
 		{
-			*path = malloc(strlen(token) + strlen(cmd) + 2);
-			if (*path != NULL)
+			strcpy(*path, token);
+			strcat(*path, "/");
+			strcat(*path, cmd);
+			if (access(*path, X_OK) == 0)
 			{
-				strcpy(*path, token);
-				strcat(*path, "/");
-				strcat(*path, cmd);
-				if (access(*path, X_OK) == 0)
-				{
-					path_found = 1;
-				}
-
-				if (!path_found)
-					free(*path);
+				foundp = 1;
 			}
-		}
 
-		free(path_env_copy);
+			if (!foundp)
+				free(*path);
+		}
 	}
 
-	return path_found;
+	free(_copy);
+	}
+
+	return (foundp);
 }
 
 /**
