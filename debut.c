@@ -3,8 +3,7 @@
 /**
  * _debut - shell's main
  *
- * Description: handle user input,
- * 
+ * Description: handle user input
  */
 
 void _debut(void)
@@ -65,7 +64,7 @@ ssize_t read_cmd(char **l, size_t *sizeof_l)
 	return (getline(l, sizeof_l, stdin));
 }
 /**
- * write_error - Writes an error message to STDERR
+ * _werror - Writes an error message to STDERR
  *
  * @cmd: command
  * Description: Writes an error message
@@ -99,16 +98,16 @@ void _wexit_werror(char *num)
  */
 void free_array(char **array)
 {
-    int count = 0;
+	int count = 0;
 
-    if (!array)
-        return;
+	if (!array)
+		return;
 
-    while (array[count] != NULL)
-    {
-        free(array[count]);
-        count++;
-    }
+	while (array[count] != NULL)
+	{
+		free(array[count]);
+		count++;
+	}
 
-    free(array);
+	free(array);
 }
