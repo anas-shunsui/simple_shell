@@ -93,19 +93,22 @@ void _wexit_werror(char *num)
 
 /**
  * free_array - Frees memory
- * @array: allocated array of strings.
+ * @array: Allocated array of strings.
  *
- * Return: nothing
+ * Return: Nothing
  */
 void free_array(char **array)
 {
-	int count;
+    int count = 0;
 
-	if (!array)
-		return;
-	for (count = 0; array[count] != NULL; count++)
-	{
-		free(array[count]);
-	}
-	free(array);
+    if (!array)
+        return;
+
+    while (array[count] != NULL)
+    {
+        free(array[count]);
+        count++;
+    }
+
+    free(array);
 }
