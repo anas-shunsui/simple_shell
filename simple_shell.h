@@ -1,32 +1,50 @@
 #ifndef SIMPLE_SHELL_H
 #define SIMPLE_SHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include<unistd.h>
+#include<stddef.h>
+#include<string.h>
+#include<sys/wait.h>
 #include <limits.h>
-#include <fcntl.h>
-#include <errno.h>
 
-#define DELIM " \t\n"
 extern char **environ;
 
-char *read_line(void);
-char **splinter(char *l);
-int _exec(char **cmd, char **argv);
-void print_prompt(void);
+/* built function*/
+void debut_shell(void);
+void non_interactive_mode(char *token, int *status);
+ssize_t read_command(char **line, size_t *size_line);
+void handle_exit_status(int my_status, char **single_command,
+char **token, int *status);
+void handle_custom_exit(int my_status, char **commands,
+char *line, int *status);
 
-char *_strdup(const char *s);
-int _strcmp(char *str1, char str2);
+/* execute command*/
+void _execvep(char **commands, char **envp, int *status);
+int search_path(char *command, char **full_path);
+void wait_child_process(int *status);
+char *mygetenv(const char *path);
+int _atoi(char *s);
+
+/* handle line and delimiters(/n...)*/
+char **tokenize_string(char *str, char *delimiters);
+
+/* write messages */
+void write_error(char *command);
+void write_exit_error(char *number);
+void print_env_var(void);
+void handle_getline_error(char *line);
+
+/* string fucntion*/
+char *_strdup(const char *src);
 int _strlen(char *str);
-char *_strcat(char *dest, char *src);
-char *_strcpy(char *dest, char *src);
+int _strcmp(char *s1, char *s2);
+char *_strncpy(char *dest, char *src, int n);
+char *_strncat(char *dest, char *src, int n);
 
+
+/* free memory leak*/
 void free_array(char **array);
-void free_a(char **array, int len);
 
 #endif
