@@ -19,23 +19,23 @@ void _exec(char **cmds, char **environ, int *status)
 		if (pid == 0)
 			execve(cmds[0], cmds, environ);
 		else
-			wait_child_process(status);
+			child_process(status);
 	}
-	else if (search_path(cmds[0], &path))
+	else if (_search(cmds[0], &path))
 	{
 		pid = fork();
 
 		if (pid == 0)
 			execve(path, cmds, environ);
 		else
-			wait_child_process(status);
+			child_process(status);
 
 		free(path);
 	}
 	else
 	{
 		*status = 127;
-		write_error(cmds[0]);
+		_werror(cmds[0]);
 	}
 }
 
@@ -52,7 +52,7 @@ int _search(char *cmd, char **path)
 	char *token, *env;
 	int foundp = 0;
 
-	env = mygetenv("PATH");
+	env = _getenv("PATH");
 
 	if (env != NULL)
 	{

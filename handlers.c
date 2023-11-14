@@ -17,7 +17,7 @@ void _exit_status(int my_stat, char **sngl_cmd, char **token,
 		(my_stat == 0 && sngl_cmd[1][0] != '0') ||
 		my_stat < 0)
 	{
-		write_exit_error(sngl_cmd[1]);
+		_wexit_werror(sngl_cmd[1]);
 		*status = 2;
 	}
 	else

@@ -12,34 +12,34 @@
 extern char **environ;
 
 /* built function*/
-void debut_shell(void);
-void non_interactive_mode(char *token, int *status);
-ssize_t read_command(char **line, size_t *size_line);
-void handle_exit_status(int my_status, char **single_command,
-char **token, int *status);
-void handle_custom_exit(int my_status, char **commands,
-char *line, int *status);
+void _debut(void);
+void non_intermode(char *token, int *status);
+ssize_t read_cmd(char **l, size_t *sizeof_l);
+void _exit_status(int my_stat, char **sngl_cmd, char **token,
+int *status);
+void _custom_exit(int my_stat, char **cmds,
+char *l, int *status);
 
 /* execute command*/
-void _execvep(char **commands, char **envp, int *status);
-int search_path(char *command, char **full_path);
-void wait_child_process(int *status);
-char *mygetenv(const char *path);
-int _atoi(char *s);
+void _exec(char **cmds, char **environ, int *status);
+int _search(char *cmd, char **path);
+void child_process(int *status);
+char *_getenv(const char *path);
+int _atoi(char *str);
 
 /* handle line and delimiters(/n...)*/
-char **tokenize_string(char *str, char *delimiters);
+char **splinter_string(char *s, char *del);
 
 /* write messages */
-void write_error(char *command);
-void write_exit_error(char *number);
-void print_env_var(void);
-void handle_getline_error(char *line);
+void _werror(char *cmd);
+void _wexit_werror(char *num);
+void _environ_var(void);
+void _getline_error(char *l);
 
 /* string fucntion*/
 char *_strdup(const char *src);
 int _strlen(char *str);
-int _strcmp(char *s1, char *s2);
+int _strcmp(char *str1, char *str2);
 char *_strncpy(char *dest, char *src, int n);
 char *_strncat(char *dest, char *src, int n);
 

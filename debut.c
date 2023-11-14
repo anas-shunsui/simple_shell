@@ -17,8 +17,8 @@ void _debut(void)
 	{
 		reads = read_cmd(&l, &sizeof_l);
 		if (reads == -1)
-			handle_getline_error(l);
-		cmds = tokenize_string(l, " \n\t");
+			_getline_error(l);
+		cmds = splinter_string(l, " \n\t");
 		if (cmds[0])
 		{
 			if (!_strcmp(cmds[0], "exit"))
@@ -27,7 +27,7 @@ void _debut(void)
 				{
 					int my_status = _atoi(cmds[1]);
 
-					handle_custom_exit(my_status, cmds, l, &stat);
+					_custom_exit(my_status, cmds, l, &stat);
 				}
 				else
 				{
@@ -38,11 +38,11 @@ void _debut(void)
 			}
 			else if (!_strcmp(cmds[0], "env"))
 			{
-				print_env_var();
+				_environ_var();
 				stat = 0;
 			}
 			else
-				_execvep(cmds, environ, &stat);
+				_exec(cmds, environ, &stat);
 		}
 		free_array(cmds);
 		free(l);
