@@ -23,17 +23,17 @@ int main(void)
 			free(l);
 			l = NULL;
 		}
-		return status;
+		return (status);
 	}
 	debut_shell();
-	return 0;
+	return (0);
 }
 
 /**
  * non_intermode - Executes shell commands in non_nteractive_mode
  * @token: string
  * @status: integer
- * 
+ *
  * Return: status
  */
 
@@ -75,32 +75,32 @@ void non_intermode(char *token, int *status)
 /**
  * splinter_string - Splits a string into tokens
  * @s: string
- * @delim: delimiters
+ * @del: delimiters
  *
  * Return: result.
  */
 
-char **splinter_string(char *s, char *delim)
+char **splinter_string(char *s, char *del)
 {
 	int i = 0;
-	char *token;
-	char **result = malloc(20 * sizeof(char *));
+	char *split;
+	char **res = malloc(20 * sizeof(char *));
 
-	if (result == NULL)
+	if (res == NULL)
 	{
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
 
-	for (token = strtok(s, delim); token != NULL; i++, token = strtok(NULL, delim))
+	for (split = strtok(s, del); split != NULL; i++, split = strtok(NULL, del))
 	{
-		result[i] = _strdup(token);
+		res[i] = _strdup(split);
 	}
 
 	for (; i < 20; i++)
 	{
-		result[i] = NULL;
+		res[i] = NULL;
 	}
 
-	return (result);
+	return (res);
 }
