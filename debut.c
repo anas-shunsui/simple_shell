@@ -60,7 +60,7 @@ void _debut(void)
  */
 ssize_t read_cmd(char **l, size_t *sizeof_l)
 {
-	write(STDOUT_FILENO, "#cisfun$ ", 9);
+	write(STDOUT_FILENO, "#$ ", 9);
 	return (getline(l, sizeof_l, stdin));
 }
 /**

@@ -45,7 +45,7 @@ void _custom_exit(int my_stat, char **cmds,
 		(my_stat == 0 && cmds[1][0] != '0') ||
 		my_stat < 0)
 	{
-		write_exit_error(cmds[1]);
+		_wexit_werror(cmds[1]);
 		*status = 2;
 	}
 	else

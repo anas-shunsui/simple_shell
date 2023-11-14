@@ -25,7 +25,7 @@ int main(void)
 		}
 		return (status);
 	}
-	debut_shell();
+	_debut();
 	return (0);
 }
 
@@ -52,7 +52,7 @@ void non_intermode(char *token, int *status)
 			{
 				int my_status = _atoi(sngl_cmd[1]);
 
-				handle_exit_status(my_status, sngl_cmd, &token, status);
+				_exit_status(my_status, sngl_cmd, &token, status);
 			}
 			else
 			{
@@ -63,11 +63,11 @@ void non_intermode(char *token, int *status)
 		}
 		else if (!_strcmp(sngl_cmd[0], "env"))
 		{
-			print_env_var();
+			_environ_var();
 			*status = 0;
 		}
 		else
-			_execvep(sngl_cmd, environ, status);
+			_exec(sngl_cmd, environ, status);
 	}
 	free_array(sngl_cmd);
 }
