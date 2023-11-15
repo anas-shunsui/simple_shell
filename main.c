@@ -30,7 +30,7 @@ int main(void)
 }
 
 /**
- * non_intermode - Executes shell commands in non_nteractive_mode
+ * non_intermode - Executes shell commands
  * @token: string
  * @status: integer
  *
