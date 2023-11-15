@@ -52,7 +52,7 @@ void _debut(void)
 
 /**
  * read_cmd - Reads command
- * @l: Line buffer
+ * @l: Buffer line
  * @sizeof_l: Size of line buffer
  *
  * Return: Number of characters
