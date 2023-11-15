@@ -24,17 +24,9 @@ void _debut(void)
 		{
 			if (!_strcmp(cmds[0], "exit"))
 			{
-				if (cmds[1])
-				{
-					int my_status = _atoi(cmds[1]);
-					_custom_exit(my_status, cmds, l, &stat);
-				}
-				else
-				{
-					free(l);
-					free_array(cmds);
-					exit(stat);
-				}
+				cmds[1] ? _custom_exit(_atoi(cmds[1]), cmds, l, &stat) :
+				(free(l), free_array(cmds), exit(stat));
+
 			}
 			else if (!_strcmp(cmds[0], "env"))
 			{
