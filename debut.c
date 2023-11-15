@@ -13,11 +13,12 @@ void _debut(void)
 	ssize_t reads;
 	int stat = 0;
 
-	while (1)
+	for (;;)
 	{
 		reads = read_cmd(&l, &sizeof_l);
 		if (reads == -1)
 			_getline_error(l);
+
 		cmds = splinter_string(l, " \n\t");
 		if (cmds[0])
 		{
@@ -26,7 +27,6 @@ void _debut(void)
 				if (cmds[1])
 				{
 					int my_status = _atoi(cmds[1]);
-
 					_custom_exit(my_status, cmds, l, &stat);
 				}
 				else
@@ -50,17 +50,17 @@ void _debut(void)
 	}
 }
 
-
 /**
- * read_cmd - Reads a line of command from the user
- * @l: The line buffer to store command
- * @sizeof_l: The size of the line buffer
+ * read_cmd - Reads command
+ * @l: Line buffer
+ * @sizeof_l: Size of line buffer
  *
- * Return: Returns the number of characters read.
+ * Return: Number of characters
  */
+
 ssize_t read_cmd(char **l, size_t *sizeof_l)
 {
-	write(STDOUT_FILENO, "#$ ", 9);
+	write(STDOUT_FILENO, "#anas$ ", 7);
 	return (getline(l, sizeof_l, stdin));
 }
 /**

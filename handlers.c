@@ -10,12 +10,10 @@
  * Return: void.
  */
 
-void _exit_status(int my_stat, char **sngl_cmd, char **token,
-											int *status)
+void _exit_status(int my_stat, char **sngl_cmd, char **token, int *status)
 {
-	if (my_stat == -1 ||
-		(my_stat == 0 && sngl_cmd[1][0] != '0') ||
-		my_stat < 0)
+	if ((my_stat == -1) || ((my_stat == 0) && (sngl_cmd[1][0] != '0')) ||
+															(my_stat < 0))
 	{
 		_wexit_werror(sngl_cmd[1]);
 		*status = 2;
@@ -38,12 +36,10 @@ void _exit_status(int my_stat, char **sngl_cmd, char **token,
  * Return: void.
  */
 
-void _custom_exit(int my_stat, char **cmds,
-						char *l, int *status)
+void _custom_exit(int my_stat, char **cmds, char *l, int *status)
 {
-	if (my_stat == -1 ||
-		(my_stat == 0 && cmds[1][0] != '0') ||
-		my_stat < 0)
+	if ((my_stat == -1) || ((my_stat == 0) && (cmds[1][0] != '0')) ||
+														(my_stat < 0))
 	{
 		_wexit_werror(cmds[1]);
 		*status = 2;
@@ -55,6 +51,7 @@ void _custom_exit(int my_stat, char **cmds,
 		exit(my_stat);
 	}
 }
+
 /**
  * _getline_error - Handles getline error.
  * @l: the input line.
